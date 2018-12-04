@@ -22,9 +22,7 @@ class TodoListViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        
-        //loadItems()
+        loadItems()
     }
     
     //MARK - Tableview Datasource Methods
@@ -41,6 +39,9 @@ class TodoListViewController: UITableViewController {
     
     //MARK - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+//        context.delete(itemArray[indexPath.row])
+//        itemArray.remove(at: indexPath.row)
         
         itemArray[indexPath.row].done = !itemArray[indexPath.row].done
         saveItems()
@@ -87,15 +88,29 @@ class TodoListViewController: UITableViewController {
     }
     
     //MARK - Save Item in the Array
-//    func loadItems() {
-//        if let data = try? Data(contentsOf: dataFilePath!) {
-//            let decoder = PropertyListDecoder()
-//            do {
-//                itemArray = try decoder.decode([Item].self, from: data)
-//            } catch {
-//
-//            }
-//        }
-//    }
+    func loadItems(with request: NSFetchRequest<Item> = Item.fetchRequest()) { //last one is default
+        do {
+            itemArray = try context.fetch(request)
+        } catch {
+            print("Error fetching \(error)")
+        }
+    }
+    
 }
 
+
+//MARK: - Search bar methods
+
+extension TodoListViewController:  UISearchBarDelegate {
+    
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        let requset: NSFetchRequest<Item> = Item.fetchRequest()
+        requset.predicate = NSPredicate(format: "title CONTAINS[cd] %@", searchBar.text!)
+        
+        requset.sortDescriptors = [NSSortDescriptor(key: "title", ascending: true)]
+        
+        loadItems(with: requset)
+        
+        //Print(searchBar.text!)
+    }
+}
