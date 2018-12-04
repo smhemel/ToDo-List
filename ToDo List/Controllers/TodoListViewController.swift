@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class TodoListViewController: UITableViewController {
     
@@ -15,12 +16,15 @@ class TodoListViewController: UITableViewController {
     //it is find this app documnet location
     //create Items.plist to the location and saved data to the plist
     
-    let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
+    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    
     //let defaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        loadItems()
+        
+        
+        //loadItems()
     }
     
     //MARK - Tableview Datasource Methods
@@ -52,8 +56,10 @@ class TodoListViewController: UITableViewController {
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //what will happen once the user clicks the Add Item button on our UIAlert
             if textField.text != nil {
-                let newItem = Item()
+                
+                let newItem = Item(context: self.context)
                 newItem.title = textField.text!
+                newItem.done = false
                 self.itemArray.append(newItem)
                 self.saveItems()
             }
@@ -71,10 +77,9 @@ class TodoListViewController: UITableViewController {
     
     //MARK - Model Manupulation Methods
     func saveItems() {
-        let encoder = PropertyListEncoder()
+        
         do {
-            let data = try encoder.encode(itemArray)
-            try data.write(to: dataFilePath!)   //Write Data to the Data File list
+            try context.save()
         } catch {
             
         }
@@ -82,15 +87,15 @@ class TodoListViewController: UITableViewController {
     }
     
     //MARK - Save Item in the Array
-    func loadItems() {
-        if let data = try? Data(contentsOf: dataFilePath!) {
-            let decoder = PropertyListDecoder()
-            do {
-                itemArray = try decoder.decode([Item].self, from: data)
-            } catch {
-                
-            }
-        }
-    }
+//    func loadItems() {
+//        if let data = try? Data(contentsOf: dataFilePath!) {
+//            let decoder = PropertyListDecoder()
+//            do {
+//                itemArray = try decoder.decode([Item].self, from: data)
+//            } catch {
+//
+//            }
+//        }
+//    }
 }
 
