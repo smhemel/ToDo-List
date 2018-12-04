@@ -11,28 +11,17 @@ import UIKit
 class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
-    //        let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
+    
+    //let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     //it is find this app documnet location
     //create Items.plist to the location and saved data to the plist
+    
     let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("Items.plist")
     //let defaults = UserDefaults.standard
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let myItem = Item()
-        myItem.title = "Buy Shirt"
-        itemArray.append(myItem)
-        
-        let myItem1 = Item()
-        myItem1.title = "Go to University"
-        itemArray.append(myItem1)
-        
-        let myItem2 = Item()
-        myItem2.title = "Buy Salt"
-        itemArray.append(myItem2)
-//        if let items = defaults.array(forKey: "ToDoListArray") as? [Item] {
-//            itemArray = items
-//        }
+        loadItems()
     }
     
     //MARK - Tableview Datasource Methods
@@ -90,6 +79,18 @@ class TodoListViewController: UITableViewController {
             
         }
         self.tableView.reloadData()
+    }
+    
+    //MARK - Save Item in the Array
+    func loadItems() {
+        if let data = try? Data(contentsOf: dataFilePath!) {
+            let decoder = PropertyListDecoder()
+            do {
+                itemArray = try decoder.decode([Item].self, from: data)
+            } catch {
+                
+            }
+        }
     }
 }
 
