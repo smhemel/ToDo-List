@@ -11,7 +11,6 @@ import UIKit
 class TodoListViewController: UITableViewController {
     
     var itemArray = [Item]()
-    
     //let dataFilePath = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first
     //it is find this app documnet location
     //create Items.plist to the location and saved data to the plist
@@ -35,6 +34,7 @@ class TodoListViewController: UITableViewController {
         return cell
     }
     
+    
     //MARK - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
@@ -43,10 +43,11 @@ class TodoListViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    
     //MARK - Add New Items
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
-        
+
         let alert = UIAlertController(title: "Add New ToDo Item", message: "", preferredStyle: .alert)
         let action = UIAlertAction(title: "Add Item", style: .default) { (action) in
             //what will happen once the user clicks the Add Item button on our UIAlert
@@ -54,7 +55,6 @@ class TodoListViewController: UITableViewController {
                 let newItem = Item()
                 newItem.title = textField.text!
                 self.itemArray.append(newItem)
-                //self.defaults.set(self.itemArray, forKey: "ToDoListArray")
                 self.saveItems()
             }
         }
