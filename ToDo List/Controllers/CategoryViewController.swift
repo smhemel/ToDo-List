@@ -33,16 +33,22 @@ class CategoryViewController: SwipeTableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
-        cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Category added yet!"
-        cell.backgroundColor = UIColor(hexString: categoryArray?[indexPath.row].colour ?? "1D9BF6")
+        if let category = categoryArray?[indexPath.row] {
+            cell.textLabel?.text = categoryArray?[indexPath.row].name
+            
+            guard let categoryColour = UIColor(hexString: category.colour) else {fatalError()}
+            cell.backgroundColor = categoryColour
+            cell.textLabel?.textColor = ContrastColorOf(categoryColour, returnFlat: true)
+        }
+        
         return cell
     }
     
     
     //MARK: - TableView Delegate Methods
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "goToItem", sender: self)
     }
     
@@ -63,21 +69,19 @@ class CategoryViewController: SwipeTableViewController {
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            if textField.text != nil {
                 //Realm is auto update
                 let newCategory = Category()
                 newCategory.name = textField.text!
                 newCategory.colour = UIColor.randomFlat.hexValue()
-                
+            
                 self.save(category: newCategory)
-            }
         }
         
         alert.addAction(action)
         
         alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Create new Category"
             textField = alertTextField
+            alertTextField.placeholder = "Create new Category"
         }
         
         present(alert, animated: true, completion: nil)
@@ -104,7 +108,9 @@ class CategoryViewController: SwipeTableViewController {
         tableView.reloadData()
     }
     
+    
     //MARK:- Delete Data From Swipe
+    
     override func updateModel(at indexPath: IndexPath) {
         if let categoryForDeletion = self.categoryArray?[indexPath.row] {
             do {

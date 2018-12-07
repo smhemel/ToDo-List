@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Today-->
+        <!--Items-->
         <scene sceneID="y3m-LC-7ID">
             <objects>
                 <tableViewController id="7cQ-0j-oMc" customClass="TodoListViewController" customModule="ToDo_List" customModuleProvider="target" sceneMemberID="viewController">
@@ -40,7 +40,7 @@
                             <outlet property="delegate" destination="7cQ-0j-oMc" id="aPO-MQ-RVq"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Today" id="UjG-QK-Kec">
+                    <navigationItem key="navigationItem" title="Items" id="UjG-QK-Kec">
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="dBi-bm-O2i">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
@@ -49,6 +49,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="searchBar" destination="VVU-OW-eFm" id="Vxc-mn-TCT"/>
                         <outlet property="searchDisplayController" destination="gmz-Bi-Od9" id="yX7-EL-UJ2"/>
                     </connections>
                 </tableViewController>
@@ -69,12 +70,14 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="8ho-rL-dac" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="ce2-dH-HRl">
-                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="ce2-dH-HRl">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="barTintColor" red="0.52941176469999995" green="0.50588235290000005" blue="0.8980392157" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <textAttributes key="titleTextAttributes">
                             <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="20"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </textAttributes>
                     </navigationBar>
@@ -85,7 +88,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IUa-3A-trY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-919" y="-35"/>
+            <point key="canvasLocation" x="-954" y="-252"/>
         </scene>
         <!--Today-->
         <scene sceneID="x8v-P6-wS0">
