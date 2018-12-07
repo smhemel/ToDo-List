@@ -17,12 +17,12 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <searchBar key="tableHeaderView" contentMode="redraw" id="wXq-vs-1SZ">
+                        <searchBar key="tableHeaderView" contentMode="redraw" id="VVU-OW-eFm">
                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
                             <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                             <textInputTraits key="textInputTraits"/>
                             <connections>
-                                <outlet property="delegate" destination="7cQ-0j-oMc" id="E7X-Ev-mYZ"/>
+                                <outlet property="delegate" destination="7cQ-0j-oMc" id="aRC-V3-pBb"/>
                             </connections>
                         </searchBar>
                         <prototypes>
@@ -56,14 +56,13 @@
                 <searchDisplayController id="gmz-Bi-Od9">
                     <connections>
                         <outlet property="delegate" destination="7cQ-0j-oMc" id="wdR-wI-uq2"/>
-                        <outlet property="searchBar" destination="wXq-vs-1SZ" id="zJR-5w-dpE"/>
                         <outlet property="searchContentsController" destination="7cQ-0j-oMc" id="dbK-EK-st0"/>
                         <outlet property="searchResultsDataSource" destination="7cQ-0j-oMc" id="Pt0-NT-SUB"/>
                         <outlet property="searchResultsDelegate" destination="7cQ-0j-oMc" id="G2j-PH-vjH"/>
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1036" y="11"/>
+            <point key="canvasLocation" x="1017" y="-105"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="ViT-YQ-utb">
