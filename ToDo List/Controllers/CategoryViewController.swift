@@ -8,10 +8,10 @@
 
 
 import UIKit
-import CoreData
 import RealmSwift
+import ChameleonFramework
 
-class CategoryViewController: UITableViewController {
+class CategoryViewController: SwipeTableViewController {
     
     let realm = try! Realm()
     
@@ -21,6 +21,7 @@ class CategoryViewController: UITableViewController {
         super.viewDidLoad()
         
         loadCategory()
+        tableView.separatorStyle = .none
         
     }
     
@@ -32,8 +33,9 @@ class CategoryViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         cell.textLabel?.text = categoryArray?[indexPath.row].name ?? "No Category added yet!"
+        cell.backgroundColor = UIColor(hexString: categoryArray?[indexPath.row].colour ?? "1D9BF6")
         return cell
     }
     
@@ -65,6 +67,7 @@ class CategoryViewController: UITableViewController {
                 //Realm is auto update
                 let newCategory = Category()
                 newCategory.name = textField.text!
+                newCategory.colour = UIColor.randomFlat.hexValue()
                 
                 self.save(category: newCategory)
             }
@@ -96,7 +99,25 @@ class CategoryViewController: UITableViewController {
     //MARK: - Save Item in the Array
     func loadCategory(){
         
-        categoryArray  = realm.objects(Category.self)
+        categoryArray = realm.objects(Category.self)
+        
         tableView.reloadData()
     }
+    
+    //MARK:- Delete Data From Swipe
+    override func updateModel(at indexPath: IndexPath) {
+        if let categoryForDeletion = self.categoryArray?[indexPath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(categoryForDeletion)
+                }
+            } catch {
+                print("Error deleting category, \(error)")
+            }
+            //tableView.reloadData()
+            //delete reload because we add editActionsOptionsForRowAt function
+        }
+    }
 }
+
+//MARK: - Swipe Cell Delegate Methods
